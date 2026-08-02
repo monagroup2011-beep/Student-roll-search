@@ -1,1 +1,28 @@
+<script src="students.js"></script>
+<script src="students.js"></script>
 
+<script>
+function searchRoll() {
+
+    let name = document.getElementById("name").value.trim().toLowerCase();
+    let cls = document.getElementById("class").value;
+    let section = document.getElementById("section").value.toUpperCase();
+
+    let result = document.getElementById("result");
+    result.style.display = "block";
+
+    let student = students.find(s =>
+        s.name.toLowerCase() === name &&
+        s.class === cls &&
+        s.section === section
+    );
+
+    if(student){
+        result.className = "success";
+        result.innerHTML = "Roll Number : <br><h2>" + student.roll + "</h2>";
+    } else {
+        result.className = "error";
+        result.innerHTML = "Record Not Found";
+    }
+}
+</script>
