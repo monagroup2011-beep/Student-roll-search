@@ -1,1 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roll Number Finder</title>
 
+<style>
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f4f7fb;
+}
+
+.header{
+background:#0b4ea2;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+max-width:500px;
+margin:40px auto;
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(0,0,0,.2);
+}
+
+input,select,button{
+width:100%;
+padding:12px;
+margin-top:12px;
+font-size:16px;
+border-radius:6px;
+border:1px solid #ccc;
+box-sizing:border-box;
+}
+
+button{
+background:#0b4ea2;
+color:white;
+border:none;
+cursor:pointer;
+font-size:18px;
+}
+
+button:hover{
+background:#083b7d;
+}
+
+#result{
+margin-top:20px;
+padding:15px;
+font-size:18px;
+font-weight:bold;
+text-align:center;
+border-radius:6px;
+display:none;
+}
+
+.success{
+background:#d4edda;
+color:#155724;
+}
+
+.error{
+background:#f8d7da;
+color:#721c24;
+}
+
+.footer{
+text-align:center;
+padding:20px;
+font-size:14px;
+color:#555;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+<h2>MONA MODERN ENGLISH MEDIUM SCHOOL</h2>
+<h3>Student Roll Number Finder</h3>
+</div>
+
+<div class="container">
+
+<input type="text" id="name" placeholder="Enter Student Name">
+
+<select id="class">
+<option value="">Select Class</option>
+<option>Nursery</option>
+<option>LKG</option>
+<option>UKG</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
+<option>6</option>
+<option>7</option>
+<option>8</option>
+<option>9</option>
+<option>10</option>
+<option>11</option>
+<option>12</option>
+</select>
+
+<select id="section">
+<option value="">Select Section</option>
+<option>A</option>
+<option>B</option>
+<option>C</option>
+<option>D</option>
+</select>
+
+<button onclick="searchRoll()">Search Roll Number</button>
+
+<div id="result"></div>
+
+</div>
+
+<div class="footer">
+© Mona Modern English Medium School
+</div>
+
+<script>
+
+const api="https://script.google.com/macros/s/AKfycby1hbWEo_G78qtrocBUNAASv6TioxpgMffFaUmfgxVNw-GTmY9EhiqPWUvJGHFd83QJxg/exec";
+
+function searchRoll(){
+
+let name=document.getElementById("name").value.trim();
+let cls=document.getElementById("class").value;
+let section=document.getElementById("section").value;
+
+if(name==""||cls==""||section==""){
+alert("Please fill all fields");
+return;
+}
+
+fetch(api+"?name="+encodeURIComponent(name)+"&class="+encodeURIComponent(cls)+"&section="+encodeURIComponent(section))
+.then(r=>r.json())
+.then(data=>{
+
+let result=document.getElementById("result");
+
+result.style.display="block";
+
+if(data.found){
+
+result.className="success";
+
+result.innerHTML="Roll Number : <br><h2>"+data.rollNumber+"</h2>";
+
+}else{
+
+result.className="error";
+
+result.innerHTML="Record Not Found";
+
+}
+
+})
+.catch(()=>{
+alert("Unable to connect.");
+});
+
+}
+
+</script>
+
+</body>
+</html>
